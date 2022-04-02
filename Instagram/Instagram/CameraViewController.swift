@@ -10,7 +10,6 @@ import AlamofireImage
 import Parse
 
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
     
     @IBOutlet weak var commentField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
@@ -18,6 +17,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
     @IBAction func onCameraButton(_ sender: Any) {
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -38,10 +38,11 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         let image = info[.editedImage] as! UIImage
         
         let size = CGSize(width: 300, height: 300)
-        let scaledImage = image.af.imageScaled(to: size)
+        let scaledImage = image.af.imageAspectScaled(toFill: size)
         imageView.image = scaledImage
         dismiss(animated : true, completion: nil)
     }
+    
     @IBAction func submit(_ sender: Any) {
         let post = PFObject(className: "Posts")
     
@@ -62,7 +63,6 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
                 print("error!")
             }
         }
-        
     }
     
     /*
@@ -74,5 +74,5 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         // Pass the selected object to the new view controller.
     }
     */
-
+    
 }
